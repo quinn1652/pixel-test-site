@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <title>Test Form — Dec 2019 Pixel Structure</title>
+    <meta name="description" content="A generic test form for Facebook pixel behavior research.">
+    <meta name="keywords" content="test, form, questionnaire, research">
+    <meta property="og:type" content="website"/>
+    <meta property="og:title" content="Test Form — Dec 2019 Pixel Structure"/>
+    <meta property="og:description" content="A generic test form for Facebook pixel behavior research."/>
+
+    <!-- CSS -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css">
+
+    <!-- Pixel config — loaded BEFORE pixel code -->
+    <script src="../pixel-config.js"></script>
+
+    <!-- Meta Pixel Code -->
+    <script>
+        (function () {
+            var config = window.PIXEL_CONFIG || {};
+            var pixelId = config.pixelId || 'YOUR_TEST_PIXEL_ID';
+            var fbeventsUrl = config.fbeventsUrl || 'https://connect.facebook.net/en_US/fbevents.js';
+            var isDryRun = config.dryRun === true || pixelId === 'YOUR_TEST_PIXEL_ID';
+
+            if (isDryRun) {
+                window.fbq = function () {
+                    var args = Array.prototype.slice.call(arguments);
+                    console.log('[DRY RUN] fbq(' + args.map(function (a) {
+                        return JSON.stringify(a);
+                    }).join(', ') + ')');
+                };
+                window._fbq = window.fbq;
+                console.warn('[pixel-test-site] Dry-run mode. Set dryRun: false in pixel-config.js to transmit beacons.');
+            } else {
+                // Exact Meta Pixel base code — fbeventsUrl passed as v (4th arg) per Facebook standard
+                !function(f,b,e,v,n,t,s)
+                {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+                if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+                n.queue=[];t=b.createElement(e);t.async=!0;
+                t.src=v;s=b.getElementsByTagName(e)[0];
+                s.parentNode.insertBefore(t,s)}(window,document,'script',fbeventsUrl);
+            }
+
+            fbq('init', pixelId);
+            fbq('track', 'PageView');
+
+            // Write noscript fallback with correct pixel ID
+            document.write('<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=' + pixelId + '&ev=PageView&noscript=1"/></noscript>');
+        })();
+    </script>
+    <!-- End Meta Pixel Code -->
+
+    <style>
+        #test-env-banner {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 7px 14px;
+            font-family: monospace;
+            font-size: 13px;
+            position: sticky;
+            top: 0;
+            z-index: 9999;
+        }
+        #test-env-banner a { color: #adf; }
+
+        body { font-family: 'Lato', sans-serif; background: #f4f6f8; color: #333; }
+        #body-container { min-height: 100vh; }
+
+        header {
+            background: #fff;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 12px 24px;
+        }
+        header span { font-size: 1.1em; font-weight: 700; color: #444; }
+
+        .main-content { padding: 30px 0; }
+
+        .control-container {
+            background: #fff;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+
+        .slider.questionnaire { overflow: hidden; }
+
+        .questionnaire-content { min-height: 100px; }
+        .questionnaire-content.center { text-align: center; padding: 20px 0; }
+
+        .questionnaire-content-label {
+            display: block;
+            font-size: 1.1em;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #222;
+        }
+
+        label.radio {
+            display: block;
+            padding: 10px 14px;
+            margin: 6px 0;
+            border: 1px solid #d0d8e0;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 400;
+            transition: background 0.12s, border-color 0.12s;
+        }
+        label.radio:hover { background: #eef4fb; border-color: #555; }
+        label.radio input[type="radio"] { margin-right: 10px; }
+
+        label.checkbox { display: block; padding: 8px 0; font-weight: 400; cursor: pointer; }
+        label.checkbox input[type="checkbox"] { margin-right: 8px; }
+
+        select.form-control { margin-bottom: 12px; }
+
+        .btn-next, button[type="submit"] {
+            background: #444;
+            border-color: #444;
+            color: #fff;
+            font-size: 1.05em;
+            padding: 10px 28px;
+            margin-top: 12px;
+        }
+        .btn-next:hover, button[type="submit"]:hover { background: #222; border-color: #222; color: #fff; }
+        .btn-next[disabled], .btn-next.disabled { opacity: 0.4; pointer-events: none; }
+
+        #quiz-progress-bar {
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+        #quiz-progress-fill { height: 100%; background: #444; width: 0%; transition: width 0.3s; }
+
+        #additional_detail { margin-top: 14px; }
+
+        .slick-slider { margin-bottom: 0; }
+        .hidden { display: none !important; }
+    </style>
+</head>
+
+<body id="start" class="">
+
+<div id="test-env-banner">
+    TEST ENVIRONMENT — Dec 2019 pixel structure —
+    pixel ID: <strong id="banner-pixel-id">YOUR_TEST_PIXEL_ID</strong> —
+    <a href="../">← version selector</a>
+</div>
+
+<div id="body-container">
+
+    <header>
+        <span>Test Form</span>
+    </header>
+
+    <div class="container main-content">
+        <div class="row">
+
+            <div class="col-md-6 col-sm-12">
+                <div class="control-container">
+
+                    <p class="hidden-xs">Please answer a few short questions.</p>
+
+                    <div id="quiz-progress-bar"><div id="quiz-progress-fill"></div></div>
+
+                    <form novalidate id="start-form" action="#" method="post"
+                          autocomplete="off" onsubmit="return false;">
+
+                        <input type="hidden" name="csrf_token" value="test_csrf_token">
+                        <input type="hidden" name="nonce" value="test_nonce">
+
+                        <!-- ============================================================
+                             SLIDER — each div.question is one Slick slide
+                             Structural classes are verbatim from Dec 2019 implementation
+                             ============================================================ -->
+                        <div class="slider questionnaire" id="start-question-slider" rel="0">
+
+                            <!-- Q1: radio auto-advance (slider-next-select on label) -->
+                            <div class="question section-a">
+                                <div class="questionnaire-content">
+                                    <div class="form-group">
+                                        <label class="questionnaire-content-label">
+                                            <strong>Question 1 of 5 — Select an option</strong>
+                                        </label>
+                                        <div><div>
+                                            <label class="radio slider-next-select">
+                                                <input required type="radio" id="q1" data-question-type="radio" data-question-id="q1" class="answer" name="question[1][]" value="1">Option A
+                                            </label>
+                                        </div></div>
+                                        <div><div>
+                                            <label class="radio slider-next-select">
+                                                <input required type="radio" id="q1" data-question-type="radio" data-question-id="q1" class="answer" name="question[1][]" value="2">Option B
+                                            </label>
+                                        </div></div>
+                                        <div><div>
+                                            <label class="radio slider-next-select">
+                                                <input required type="radio" id="q1" data-question-type="radio" data-question-id="q1" class="answer" name="question[1][]" value="3">Option C
+                                            </label>
+                                        </div></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Q2: radio auto-advance -->
+                            <div class="question section-a">
+                                <div class="questionnaire-content">
+                                    <div class="form-group">
+                                        <label class="questionnaire-content-label">
+                                            <strong>Question 2 of 5 — How would you rate this?</strong>
+                                        </label>
+                                        <div><div>
+                                            <label class="radio slider-next-select">
+                                                <input required type="radio" id="q2" data-question-type="radio" data-question-id="q2" class="answer" name="question[2][]" value="1">Good
+                                            </label>
+                                        </div></div>
+                                        <div><div>
+                                            <label class="radio slider-next-select">
+                                                <input required type="radio" id="q2" data-question-type="radio" data-question-id="q2" class="answer" name="question[2][]" value="2">Fair
+                                            </label>
+                                        </div></div>
+                                        <div><div>
+                                            <label class="radio slider-next-select">
+                                                <input required type="radio" id="q2" data-question-type="radio" data-question-id="q2" class="answer" name="question[2][]" value="3">Poor
+                                            </label>
+                                        </div></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Q3: select auto-advance (slider-next-select on select element) -->
+                            <div class="question section-a">
+                                <div class="questionnaire-content">
+                                    <div class="form-group">
+                                        <label class="questionnaire-content-label">
+                                            <strong>Question 3 of 5 — Choose a category</strong>
+                                        </label>
+                                        <select required id="q3_select" class="form-control slider-next-select"
+                                                data-question-type="select" data-question-id="q3"
+                                                name="question[3][]">
+                                            <option value="0">Select an option</option>
+                                            <option value="1">Category 1</option>
+                                            <option value="2">Category 2</option>
+                                            <option value="3">Category 3</option>
+                                            <option value="4">Category 4</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Q4: select + manual Next button (replicates Beacon 3 button pattern) -->
+                            <div class="question section-b">
+                                <div class="questionnaire-content">
+                                    <div class="form-group">
+                                        <label class="questionnaire-content-label">
+                                            <strong>Question 4 of 5 — Choose a region</strong>
+                                        </label>
+                                        <div><div>
+                                            <select required id="q4_select" class="form-control"
+                                                    data-question-type="region" data-question-id="q4"
+                                                    name="question[4][]">
+                                                <option value="0">Select a region</option>
+                                                <option value="1">Region A</option>
+                                                <option value="2">Region B</option>
+                                                <option value="3">Region C</option>
+                                            </select>
+                                        </div></div>
+                                        <div class="form-group">
+                                            <!-- Manual Next: class matches Beacon 3 button structure -->
+                                            <a class="btn btn-default btn-next btn-lg slider-next"
+                                               id="next_region"
+                                               name="question[4][]">Next</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Q5: checkboxes + optional text + manual Next (replicates Beacon 4 pattern) -->
+                            <div class="question section-b">
+                                <div class="questionnaire-content">
+                                    <div class="form-group">
+                                        <label class="questionnaire-content-label">
+                                            <strong>Question 5 of 5 — Mark all that apply</strong>
+                                        </label>
+                                        <div class="form-group" id="section_checkboxes">
+                                            <label class="checkbox">
+                                                <input type="checkbox" id="q5" data-question-type="checkbox" data-question-id="q5" class="answer" name="question[5][]" value="1">Item 1
+                                            </label>
+                                            <label class="checkbox">
+                                                <input type="checkbox" id="q5" data-question-type="checkbox" data-question-id="q5" class="answer" name="question[5][]" value="2">Item 2
+                                            </label>
+                                            <label class="checkbox">
+                                                <input type="checkbox" id="q5" data-question-type="checkbox" data-question-id="q5" class="answer" name="question[5][]" value="3">Item 3
+                                            </label>
+                                            <div class="hidden" id="additional_detail">
+                                                <label>
+                                                    <strong>Additional detail (optional):</strong>
+                                                    <input type="text" class="form-control" name="q5_detail" id="q5_detail">
+                                                </label>
+                                            </div>
+                                            <!-- Manual Next: id matches Beacon 4 next_income pattern -->
+                                            <a class="btn btn-default btn-next btn-lg slider-next" id="next_section">Next</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- end #start-question-slider -->
+
+                        <!-- Completion screen — outside slider, shown after last question -->
+                        <!-- Submit button matches Beacon 5 button structure exactly -->
+                        <div class="next hidden" id="questionnaire-complete">
+                            <div class="questionnaire-content center">
+                                <h2>You've completed the form!</h2>
+                                <button type="submit" class="btn btn-default btn-lg btn-block">Next</button>
+                                <input type="hidden" name="action" value="save_answers">
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"></script>
+<script src="funnel.js"></script>
+
+<script>
+    document.getElementById('banner-pixel-id').textContent =
+        (window.PIXEL_CONFIG && window.PIXEL_CONFIG.pixelId) || 'YOUR_TEST_PIXEL_ID';
+</script>
+
+</body>
+</html>
