@@ -23,7 +23,7 @@ window.PIXEL_CONFIG = {
   fbeventsUrl: "https://connect.facebook.net/en_US/fbevents.js",
 
   // Set false (and set a real pixelId) to transmit live beacons
-  dryRun: true,
+  dryRun: false,
 };
 /*
 <!-- Meta Pixel Code -->
