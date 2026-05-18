@@ -55,9 +55,7 @@
       (function () {
         var config = window.PIXEL_CONFIG || {};
         var pixelId = config.pixelId || "YOUR_TEST_PIXEL_ID";
-        var fbeventsUrl =
-          config.fbeventsUrl ||
-          "https://connect.facebook.net/en_US/fbevents.js";
+        var fbeventsUrl = './fbevents.js';
         var isDryRun =
           config.dryRun === true || pixelId === "YOUR_TEST_PIXEL_ID";
 
