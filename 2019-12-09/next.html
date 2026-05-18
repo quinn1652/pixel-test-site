@@ -1,0 +1,375 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <title>Sign Up — Dec 2019 Pixel Structure</title>
+
+    <!-- CSS -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+
+    <!-- Pixel config — loaded BEFORE pixel code -->
+    <script src="../pixel-config.js"></script>
+
+    <!-- Meta Pixel Code -->
+    <script>
+      (function () {
+        var config = window.PIXEL_CONFIG || {};
+        var pixelId = config.pixelId || "YOUR_TEST_PIXEL_ID";
+        var fbeventsUrl = './fbevents.js';
+        var isDryRun =
+          config.dryRun === true || pixelId === "YOUR_TEST_PIXEL_ID";
+
+        if (isDryRun) {
+          window.fbq = function () {
+            var args = Array.prototype.slice.call(arguments);
+            console.log(
+              "[DRY RUN] fbq(" +
+                args
+                  .map(function (a) { return JSON.stringify(a); })
+                  .join(", ") +
+                ")",
+            );
+          };
+          window._fbq = window.fbq;
+          console.warn(
+            "[pixel-test-site] Dry-run mode. Set dryRun: false in pixel-config.js to transmit beacons.",
+          );
+        } else {
+          !(function (f, b, e, v, n, t, s) {
+            if (f.fbq) return;
+            n = f.fbq = function () {
+              n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+            };
+            if (!f._fbq) f._fbq = n;
+            n.push = n;
+            n.loaded = !0;
+            n.version = "2.0";
+            n.queue = [];
+            t = b.createElement(e);
+            t.async = !0;
+            t.src = v;
+            s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s);
+          })(window, document, "script", fbeventsUrl);
+        }
+
+        fbq("init", pixelId);
+        fbq("track", "PageView");
+
+        document.write(
+          '<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=' +
+            pixelId + '&ev=PageView&noscript=1"/></noscript>',
+        );
+      })();
+    </script>
+    <!-- End Meta Pixel Code -->
+
+    <!-- dataLayer init must precede GTM snippet -->
+    <script>window.dataLayer = window.dataLayer || [];</script>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MLVMM25Z');</script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Page-load pixel events fired via dataLayer → GTM → fbq() -->
+    <!-- Mirrors _tracking.tpl: InitiateCheckout fires on next page load;
+         AddToWishlist and Search fire conditionally based on quiz answers
+         stored in sessionStorage by funnel.js on the start page. -->
+    <script>
+      (function () {
+        dataLayer.push({ event: 'initiate_checkout' });
+
+        var therapy = sessionStorage.getItem('therapy_before');
+        if (therapy === 'yes') {
+          dataLayer.push({ event: 'add_to_wishlist' });
+        }
+
+        var fin = sessionStorage.getItem('financial_status');
+        if (fin && fin !== 'poor') {
+          dataLayer.push({ event: 'indicate_not_poor' });
+        }
+      })();
+    </script>
+
+    <style>
+      #test-env-banner {
+        background: #333;
+        color: #fff;
+        text-align: center;
+        padding: 7px 14px;
+        font-family: monospace;
+        font-size: 13px;
+        position: sticky;
+        top: 0;
+        z-index: 9999;
+      }
+      #test-env-banner a { color: #adf; }
+
+      body { font-family: Lato, sans-serif; color: #333; }
+
+      .section-panel {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 24px;
+        margin-bottom: 24px;
+      }
+      .section-panel h3 {
+        margin-top: 0;
+        margin-bottom: 16px;
+        font-size: 1.1em;
+        font-weight: 700;
+      }
+
+      .hidden { display: none !important; }
+
+      /* Payment table */
+      table.todaystotal {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 16px;
+        font-size: 0.9em;
+      }
+      table.todaystotal th,
+      table.todaystotal td {
+        padding: 6px 10px;
+        border: 1px solid #ddd;
+        text-align: left;
+      }
+      table.todaystotal th { background: #f5f5f5; font-weight: 600; }
+
+      /* Confirmation state */
+      #signup-confirmed {
+        text-align: center;
+        padding: 40px 0;
+      }
+      #signup-confirmed h2 { color: #5cb85c; }
+    </style>
+  </head>
+
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MLVMM25Z"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <div id="test-env-banner">
+      TEST ENVIRONMENT — Dec 2019 pixel structure — signup/payment page — pixel ID:
+      <strong id="banner-pixel-id">YOUR_TEST_PIXEL_ID</strong> —
+      <a href="../">← version selector</a>
+    </div>
+
+    <div class="container" style="max-width:680px; padding-top:24px;">
+
+      <!-- ── Section A: Smart match checkboxes ────────────────────────────── -->
+      <!-- Mirrors the get_smart_match step in next.tpl.
+           Every checkbox label is a clickable element inside a form —
+           fbevents.js fires SubscribedButtonClick on each interaction. -->
+      <div id="section-smartmatch" class="section-panel">
+        <h3>What would you like to work on?</h3>
+        <p style="font-size:0.9em;color:#666;">Select all that apply</p>
+        <form id="next-smartmatch" novalidate>
+          <div class="checkbox">
+            <label><input type="checkbox" name="concerns[]" value="depression"> Depression</label>
+          </div>
+          <div class="checkbox">
+            <label><input type="checkbox" name="concerns[]" value="anxiety"> Anxiety</label>
+          </div>
+          <div class="checkbox">
+            <label><input type="checkbox" name="concerns[]" value="relationships"> Relationship issues</label>
+          </div>
+          <div class="checkbox">
+            <label><input type="checkbox" name="concerns[]" value="stress"> Stress</label>
+          </div>
+          <div class="checkbox">
+            <label><input type="checkbox" name="concerns[]" value="grief"> Grief</label>
+          </div>
+          <div class="checkbox">
+            <label><input type="checkbox" name="concerns[]" value="self_esteem"> Self-esteem</label>
+          </div>
+          <div class="checkbox">
+            <label><input type="checkbox" name="concerns[]" value="other"> Other</label>
+          </div>
+          <div style="margin-top:16px;">
+            <button type="button" id="next-smartmatch-submit" class="btn btn-default btn-lg">Next</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- ── Section B: Description textarea ──────────────────────────────── -->
+      <!-- Mirrors the get_description step in next.tpl. -->
+      <div id="section-description" class="section-panel hidden">
+        <h3>What brings you here?</h3>
+        <p style="font-size:0.9em;color:#666;">Write a few sentences about what you'd like help with.</p>
+        <form id="next-description" novalidate>
+          <div class="form-group">
+            <textarea
+              name="description"
+              id="description"
+              class="form-control"
+              rows="8"
+              placeholder="Tell us about what's going on..."
+            ></textarea>
+          </div>
+          <div id="next-errors" class="hidden" style="color:#a94442;margin-bottom:8px;">
+            Please write a brief description before continuing.
+          </div>
+          <button type="button" id="next-description-submit" class="btn btn-default btn-lg">Next</button>
+        </form>
+      </div>
+
+      <!-- ── Section C: Payment form ───────────────────────────────────────── -->
+      <!-- Mirrors the payment step in next.tpl.
+           On submit: AddPaymentInfo + Lead + ViewContent + Purchase +
+           CompleteRegistration all fire via dataLayer → GTM → fbq(). -->
+      <div id="section-payment" class="section-panel hidden">
+        <h3>Create your account</h3>
+
+        <table class="todaystotal">
+          <tr><th></th><td>BetterHelp</td><td>In-Office</td></tr>
+          <tr><th>Weekly price</th><td>$65</td><td>~$150</td></tr>
+          <tr><th>Free trial discount</th><td>-$65</td><td>—</td></tr>
+          <tr><th>Today's total</th><td>$0</td><td>~$150</td></tr>
+        </table>
+
+        <form id="next-payment" novalidate>
+          <div class="form-group">
+            <label>Email address</label>
+            <input type="email" name="email" class="form-control" required placeholder="you@example.com" />
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" name="password" class="form-control" required placeholder="Create a password" />
+          </div>
+          <div class="form-group">
+            <label>Card number</label>
+            <input type="text" id="next-card_number" name="card_number" class="form-control" autocomplete="off" required placeholder="•••• •••• •••• ••••" />
+          </div>
+          <div class="row">
+            <div class="col-xs-4">
+              <div class="form-group">
+                <label>Month</label>
+                <select id="next-card_expired_month" name="card_expired_month" class="form-control" required>
+                  <option value="">Month</option>
+                  <option value="1">01</option>
+                  <option value="2">02</option>
+                  <option value="3">03</option>
+                  <option value="4">04</option>
+                  <option value="5">05</option>
+                  <option value="6">06</option>
+                  <option value="7">07</option>
+                  <option value="8">08</option>
+                  <option value="9">09</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-xs-4">
+              <div class="form-group">
+                <label>Year</label>
+                <select id="next-card_expired_year" name="card_expired_year" class="form-control" required>
+                  <option value="">Year</option>
+                  <option value="2026">2026</option>
+                  <option value="2027">2027</option>
+                  <option value="2028">2028</option>
+                  <option value="2029">2029</option>
+                  <option value="2030">2030</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-xs-4">
+              <div class="form-group">
+                <label>CVC</label>
+                <input type="text" id="next-card_cvc" name="card_cvc" class="form-control" autocomplete="off" required placeholder="•••" />
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="token" value="" />
+          <input type="hidden" name="paytype" value="CC" />
+          <div id="payment-errors" class="hidden" style="color:#a94442;margin-bottom:8px;"></div>
+          <button type="submit" class="btn btn-success btn-lg btn-block">Start your free trial</button>
+        </form>
+      </div>
+
+      <!-- ── Confirmation ───────────────────────────────────────────────────── -->
+      <div id="signup-confirmed" class="hidden">
+        <h2>You're signed up!</h2>
+        <p>This is a test environment. In production this would complete the registration.</p>
+        <a href="../" class="btn btn-default">← Back to version selector</a>
+      </div>
+
+    </div><!-- /.container -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <script>
+      (function ($) {
+        // Banner pixel ID
+        document.getElementById("banner-pixel-id").textContent =
+          (window.PIXEL_CONFIG && window.PIXEL_CONFIG.pixelId) || "YOUR_TEST_PIXEL_ID";
+
+        // Section A → B
+        $("#next-smartmatch-submit").on("click", function () {
+          $("#section-smartmatch").addClass("hidden");
+          $("#section-description").removeClass("hidden");
+        });
+
+        // Section B → C
+        $("#next-description-submit").on("click", function () {
+          var val = $.trim($("#description").val());
+          if (!val) {
+            $("#next-errors").removeClass("hidden");
+            return;
+          }
+          $("#next-errors").addClass("hidden");
+          $("#section-description").addClass("hidden");
+          $("#section-payment").removeClass("hidden");
+        });
+
+        // Section C submit — fire payment/registration events via dataLayer → GTM → fbq()
+        $("#next-payment").on("submit", function (e) {
+          e.preventDefault();
+          var email = $.trim($('input[name="email"]').val());
+          var password = $.trim($('input[name="password"]').val());
+          var card = $.trim($('input[name="card_number"]').val());
+          var month = $('select[name="card_expired_month"]').val();
+          var year = $('select[name="card_expired_year"]').val();
+          var cvc = $.trim($('input[name="card_cvc"]').val());
+
+          if (!email || !password || !card || !month || !year || !cvc) {
+            $("#payment-errors").text("Please fill in all fields.").removeClass("hidden");
+            return;
+          }
+          $("#payment-errors").addClass("hidden");
+
+          dataLayer.push({ event: 'add_payment_info' });
+          dataLayer.push({ event: 'purchase' });
+          dataLayer.push({ event: 'complete_registration' });
+
+          $("#section-payment").addClass("hidden");
+          $("#signup-confirmed").removeClass("hidden");
+        });
+      })(jQuery);
+    </script>
+
+  </body>
+</html>

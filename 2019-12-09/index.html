@@ -111,6 +111,17 @@
     </script>
     <!-- End Meta Pixel Code -->
 
+    <!-- dataLayer init must precede GTM snippet -->
+    <script>window.dataLayer = window.dataLayer || [];</script>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MLVMM25Z');</script>
+    <!-- End Google Tag Manager -->
+
     <style>
       /* Test banner */
       #test-env-banner {
@@ -150,23 +161,15 @@
       .hidden {
         display: none !important;
       }
-
-      /* Bootstrap 3 positions .checkbox inputs absolutely (position:absolute;
-         margin-left:-20px) and adds padding-left:20px to the label. Override
-         both so inputs stay in normal flow and don't bleed outside the slide. */
-      .checkbox input[type="checkbox"] {
-        position: static;
-        margin-left: 0;
-        margin-right: 6px;
-        vertical-align: middle;
-      }
-      .checkbox label {
-        padding-left: 0;
-      }
     </style>
   </head>
 
   <body id="start" class="">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MLVMM25Z"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
     <div id="test-env-banner">
       TEST ENVIRONMENT — Dec 2019 pixel structure — pixel ID:
       <strong id="banner-pixel-id">YOUR_TEST_PIXEL_ID</strong> —
@@ -179,300 +182,337 @@
       </header>
 
       <div class="container main-content">
-        <div class="row">
-          <div class="col-md-6 col-sm-12">
-            <div class="control-container">
-              <p class="hidden-xs">Please answer a few short questions.</p>
+        <div class="row" id="starts1">
+          <!--BEGIN SIDE LEFT-->
+          <div class="col-md-6">
 
-              <div id="quiz-progress-bar">
-                <div id="quiz-progress-fill"></div>
-              </div>
-
-              <form
-                novalidate
-                id="start-form"
-                action="#"
-                method="post"
-                autocomplete="off"
-                onsubmit="return false;"
-              >
-                <input
-                  type="hidden"
-                  name="csrf_token"
-                  value="test_csrf_token"
-                />
-                <input type="hidden" name="nonce" value="test_nonce" />
-
-                <!-- ============================================================
-                             SLIDER — each div.question is one Slick slide
-                             Structural classes are verbatim from Dec 2019 implementation
-                             ============================================================ -->
-                <div
-                  class="slider questionnaire"
-                  id="start-question-slider"
-                  rel="0"
-                >
-                  <!-- Q1: radio auto-advance (slider-next-select on label) -->
-                  <div class="question section-a">
-                    <div class="questionnaire-content">
-                      <div class="form-group">
-                        <label class="questionnaire-content-label">
-                          <strong>Question 1 of 5 — Select an option</strong>
-                        </label>
-                        <div class="radio">
-                          <label class="slider-next-select">
-                            <input
-                              required
-                              type="radio"
-                              id="q1"
-                              data-question-type="radio"
-                              data-question-id="q1"
-                              class="answer"
-                              name="question[1][]"
-                              value="1"
-                            />Option A
-                          </label>
-                        </div>
-                        <div class="radio">
-                          <label class="slider-next-select">
-                            <input
-                              required
-                              type="radio"
-                              id="q1"
-                              data-question-type="radio"
-                              data-question-id="q1"
-                              class="answer"
-                              name="question[1][]"
-                              value="2"
-                            />Option B
-                          </label>
-                        </div>
-                        <div class="radio">
-                          <label class="slider-next-select">
-                            <input
-                              required
-                              type="radio"
-                              id="q1"
-                              data-question-type="radio"
-                              data-question-id="q1"
-                              class="answer"
-                              name="question[1][]"
-                              value="3"
-                            />Option C
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Q2: radio auto-advance -->
-                  <div class="question section-a">
-                    <div class="questionnaire-content">
-                      <div class="form-group">
-                        <label class="questionnaire-content-label">
-                          <strong
-                            >Question 2 of 5 — How would you rate this?</strong
-                          >
-                        </label>
-                        <div class="radio">
-                          <label class="slider-next-select">
-                            <input
-                              required
-                              type="radio"
-                              id="q2"
-                              data-question-type="radio"
-                              data-question-id="q2"
-                              class="answer"
-                              name="question[2][]"
-                              value="1"
-                            />Good
-                          </label>
-                        </div>
-                        <div class="radio">
-                          <label class="slider-next-select">
-                            <input
-                              required
-                              type="radio"
-                              id="q2"
-                              data-question-type="radio"
-                              data-question-id="q2"
-                              class="answer"
-                              name="question[2][]"
-                              value="2"
-                            />Fair
-                          </label>
-                        </div>
-                        <div class="radio">
-                          <label class="slider-next-select">
-                            <input
-                              required
-                              type="radio"
-                              id="q2"
-                              data-question-type="radio"
-                              data-question-id="q2"
-                              class="answer"
-                              name="question[2][]"
-                              value="3"
-                            />Poor
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Q3: select auto-advance (slider-next-select on select element) -->
-                  <div class="question section-a">
-                    <div class="questionnaire-content">
-                      <div class="form-group">
-                        <label class="questionnaire-content-label">
-                          <strong>Question 3 of 5 — Choose a category</strong>
-                        </label>
-                        <select
-                          required
-                          id="q3_select"
-                          class="form-control slider-next-select"
-                          data-question-type="select"
-                          data-question-id="q3"
-                          name="question[3][]"
-                        >
-                          <option value="0">Select an option</option>
-                          <option value="1">Category 1</option>
-                          <option value="2">Category 2</option>
-                          <option value="3">Category 3</option>
-                          <option value="4">Category 4</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Q4: select + manual Next button (replicates Beacon 3 button pattern) -->
-                  <div class="question section-b">
-                    <div class="questionnaire-content">
-                      <div class="form-group">
-                        <label class="questionnaire-content-label">
-                          <strong>Question 4 of 5 — Choose a region</strong>
-                        </label>
-                        <div>
-                          <div>
-                            <select
-                              required
-                              id="q4_select"
-                              class="form-control"
-                              data-question-type="region"
-                              data-question-id="q4"
-                              name="question[4][]"
-                            >
-                              <option value="0">Select a region</option>
-                              <option value="1">Region A</option>
-                              <option value="2">Region B</option>
-                              <option value="3">Region C</option>
-                            </select>
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <!-- Manual Next: class matches Beacon 3 button structure -->
-                          <a
-                            class="btn btn-default btn-next btn-lg slider-next"
-                            id="next_region"
-                            name="question[4][]"
-                            >Next</a
-                          >
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Q5: checkboxes + optional text + manual Next (replicates Beacon 4 pattern) -->
-                  <div class="question section-b">
-                    <div class="questionnaire-content">
-                      <div class="form-group">
-                        <label class="questionnaire-content-label">
-                          <strong>Question 5 of 5 — Mark all that apply</strong>
-                        </label>
-                        <div class="form-group" id="section_checkboxes">
-                          <div class="checkbox">
-                            <label>
-                              <input
-                                type="checkbox"
-                                id="q5"
-                                data-question-type="checkbox"
-                                data-question-id="q5"
-                                class="answer"
-                                name="question[5][]"
-                                value="1"
-                              />Item 1
-                            </label>
-                          </div>
-                          <div class="checkbox">
-                            <label>
-                              <input
-                                type="checkbox"
-                                id="q5"
-                                data-question-type="checkbox"
-                                data-question-id="q5"
-                                class="answer"
-                                name="question[5][]"
-                                value="2"
-                              />Item 2
-                            </label>
-                          </div>
-                          <div class="checkbox">
-                            <label>
-                              <input
-                                type="checkbox"
-                                id="q5"
-                                data-question-type="checkbox"
-                                data-question-id="q5"
-                                class="answer"
-                                name="question[5][]"
-                                value="3"
-                              />Item 3
-                            </label>
-                          </div>
-                          <div class="hidden" id="additional_detail">
-                            <label>
-                              <strong>Additional detail (optional):</strong>
-                              <input
-                                type="text"
-                                class="form-control"
-                                name="q5_detail"
-                                id="q5_detail"
-                              />
-                            </label>
-                          </div>
-                          <!-- Manual Next: id matches Beacon 4 next_income pattern -->
-                          <a
-                            class="btn btn-default btn-next btn-lg slider-next"
-                            id="next_section"
-                            >Next</a
-                          >
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- end #start-question-slider -->
-
-                <!-- Completion screen — outside slider, shown after last question -->
-                <!-- Submit button matches Beacon 5 button structure exactly -->
-                <div class="next hidden" id="questionnaire-complete">
-                  <div class="questionnaire-content center">
-                    <h2>You've completed the form!</h2>
-                    <button
-                      type="submit"
-                      class="btn btn-default btn-lg btn-block"
-                    >
-                      Next
-                    </button>
-                    <input type="hidden" name="action" value="save_answers" />
-                  </div>
-                </div>
-              </form>
+            <div id="quiz-progress-bar">
+              <div id="quiz-progress-fill"></div>
             </div>
+
+            <form
+              novalidate
+              id="start-form"
+              action="#"
+              method="post"
+              autocomplete="off"
+              onsubmit="return false;"
+            >
+              <input type="hidden" name="help_with" value="" />
+              <input type="hidden" name="action" value="save_questions" />
+              <input type="hidden" name="uhc_form" value="" />
+              <input type="hidden" name="demo_token" value="" />
+              <input type="hidden" name="counselor" value="" />
+              <input type="hidden" name="step" value="" />
+              <input type="hidden" name="teen" value="" />
+              <input type="hidden" name="data" value="" />
+              <input type="hidden" name="ci" value="" />
+              <input type="hidden" name="csrf_token" value="test_csrf_token" />
+
+              <!-- ============================================================
+                   SLIDER — each div.question is one Slick slide
+                   Class names and attributes are verbatim from Dec 2019 snapshot
+                   ============================================================ -->
+              <div
+                class="slider questionnaire"
+                id="start-question-slider"
+                rel="0"
+              >
+
+                <!-- Slide 1: Redirect type — Q1 qid=1431 -->
+                <!-- Labels carry redirect-0/redirect-1 class + data-redirect-modal
+                     Inputs use class="answer-redirect" and data-question-type="redirect"
+                     redirect-0 = stays on BH; redirect-1 = would redirect to sister site -->
+                <div class="question GENERIC_4REDIRECTS_PODCAST_SPIRITUAL ">
+                  <div class="questionnaire-content">
+                    <div class="form-group">
+                      <label class="questionnaire-content-label"><strong>What type of counseling are you looking for?</strong></label>
+                      <div>
+                        <div>
+                          <label class="radio slider-next-select redirect-0" data-redirect-modal="refer_to_regain">
+                            <input required type="radio" id="redirect" data-question-type="redirect" data-question-id="1431" class="answer-redirect" name="quiz_answers[GENERIC_4REDIRECTS_PODCAST_SPIRITUAL][1431][]" value="4761">Individual counseling (for myself)
+                          </label>
+                        </div>
+                      </div>
+                      <div>
+                        <div>
+                          <label class="radio slider-next-select redirect-1" data-redirect-modal="refer_to_regain">
+                            <input required type="radio" id="redirect" data-question-type="redirect" data-question-id="1431" class="answer-redirect" name="quiz_answers[GENERIC_4REDIRECTS_PODCAST_SPIRITUAL][1431][]" value="4762">Couple counseling (for myself and my partner)
+                          </label>
+                        </div>
+                      </div>
+                      <div>
+                        <div>
+                          <label class="radio slider-next-select redirect-1" data-redirect-modal="refer_to_teen">
+                            <input required type="radio" id="redirect" data-question-type="redirect" data-question-id="1431" class="answer-redirect" name="quiz_answers[GENERIC_4REDIRECTS_PODCAST_SPIRITUAL][1431][]" value="4763">Teenage counseling (for my child)
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slide 2: Radio auto-advance + is_previous_therapy — Q9 qid=1439 -->
+                <!-- .is_previous_therapy triggers dataLayer push → GTM → AddToWishlist when "Yes" -->
+                <div class="question GENERIC_4REDIRECTS_PODCAST_SPIRITUAL ">
+                  <div class="questionnaire-content">
+                    <div class="form-group">
+                      <label class="questionnaire-content-label"><strong>Have you ever been in counseling or therapy before?</strong></label>
+                      <div>
+                        <div>
+                          <label class="radio slider-next-select">
+                            <input required type="radio" id="1439" data-question-type="radio" data-question-id="1439" class="answer is_previous_therapy" name="quiz_answers[GENERIC_4REDIRECTS_PODCAST_SPIRITUAL][1439][]" value="4789">No
+                          </label>
+                        </div>
+                      </div>
+                      <div>
+                        <div>
+                          <label class="radio slider-next-select">
+                            <input required type="radio" id="1439" data-question-type="radio" data-question-id="1439" class="answer is_previous_therapy" name="quiz_answers[GENERIC_4REDIRECTS_PODCAST_SPIRITUAL][1439][]" value="4790">Yes
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slide 3: Radio auto-advance + is_finance — Q13 qid=1443 -->
+                <!-- .is_finance triggers dataLayer push → GTM → Search when != "poor" -->
+                <div class="question GENERIC_4REDIRECTS_PODCAST_SPIRITUAL ">
+                  <div class="questionnaire-content">
+                    <div class="form-group">
+                      <label class="questionnaire-content-label"><strong>How would you rate your current financial status?</strong></label>
+                      <div>
+                        <div>
+                          <label class="radio slider-next-select">
+                            <input required type="radio" id="1443" data-question-type="radio" data-question-id="1443" class="answer is_finance" name="quiz_answers[GENERIC_4REDIRECTS_PODCAST_SPIRITUAL][1443][]" value="4800">Good
+                          </label>
+                        </div>
+                      </div>
+                      <div>
+                        <div>
+                          <label class="radio slider-next-select">
+                            <input required type="radio" id="1443" data-question-type="radio" data-question-id="1443" class="answer is_finance" name="quiz_answers[GENERIC_4REDIRECTS_PODCAST_SPIRITUAL][1443][]" value="4801">Fair
+                          </label>
+                        </div>
+                      </div>
+                      <div>
+                        <div>
+                          <label class="radio slider-next-select">
+                            <input required type="radio" id="1443" data-question-type="radio" data-question-id="1443" class="answer is_finance" name="quiz_answers[GENERIC_4REDIRECTS_PODCAST_SPIRITUAL][1443][]" value="4802">Poor
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slide 4: Select auto-advance — Q3 qid=1433 (age) -->
+                <!-- slider-next-select on select fires advance on change -->
+                <div class="question GENERIC_4REDIRECTS_PODCAST_SPIRITUAL ">
+                  <div class="questionnaire-content">
+                    <div class="form-group">
+                      <label class="questionnaire-content-label"><strong>How old are you?</strong></label>
+                      <div>
+                        <div>
+                          <select required type="select" id="age_select" class="form-control slider-next-select" data-question-type="age" data-question-id="1433" name="quiz_answers[GENERIC_4REDIRECTS_PODCAST_SPIRITUAL][1433][]">
+                            <option value="0">Select your age</option>
+                            <option name="open_answer_text" value="13">13</option>
+                            <option name="open_answer_text" value="14">14</option>
+                            <option name="open_answer_text" value="15">15</option>
+                            <option name="open_answer_text" value="16">16</option>
+                            <option name="open_answer_text" value="17">17</option>
+                            <option name="open_answer_text" value="18">18</option>
+                            <option name="open_answer_text" value="19">19</option>
+                            <option name="open_answer_text" value="20">20</option>
+                            <option name="open_answer_text" value="21">21</option>
+                            <option name="open_answer_text" value="22">22</option>
+                            <option name="open_answer_text" value="23">23</option>
+                            <option name="open_answer_text" value="24">24</option>
+                            <option name="open_answer_text" value="25">25</option>
+                            <option name="open_answer_text" value="26">26</option>
+                            <option name="open_answer_text" value="27">27</option>
+                            <option name="open_answer_text" value="28">28</option>
+                            <option name="open_answer_text" value="29">29</option>
+                            <option name="open_answer_text" value="30">30</option>
+                            <option name="open_answer_text" value="31">31</option>
+                            <option name="open_answer_text" value="32">32</option>
+                            <option name="open_answer_text" value="33">33</option>
+                            <option name="open_answer_text" value="34">34</option>
+                            <option name="open_answer_text" value="35">35</option>
+                            <option name="open_answer_text" value="36">36</option>
+                            <option name="open_answer_text" value="37">37</option>
+                            <option name="open_answer_text" value="38">38</option>
+                            <option name="open_answer_text" value="39">39</option>
+                            <option name="open_answer_text" value="40">40</option>
+                            <option name="open_answer_text" value="41">41</option>
+                            <option name="open_answer_text" value="42">42</option>
+                            <option name="open_answer_text" value="43">43</option>
+                            <option name="open_answer_text" value="44">44</option>
+                            <option name="open_answer_text" value="45">45</option>
+                            <option name="open_answer_text" value="46">46</option>
+                            <option name="open_answer_text" value="47">47</option>
+                            <option name="open_answer_text" value="48">48</option>
+                            <option name="open_answer_text" value="49">49</option>
+                            <option name="open_answer_text" value="50">50</option>
+                            <option name="open_answer_text" value="51">51</option>
+                            <option name="open_answer_text" value="52">52</option>
+                            <option name="open_answer_text" value="53">53</option>
+                            <option name="open_answer_text" value="54">54</option>
+                            <option name="open_answer_text" value="55">55</option>
+                            <option name="open_answer_text" value="56">56</option>
+                            <option name="open_answer_text" value="57">57</option>
+                            <option name="open_answer_text" value="58">58</option>
+                            <option name="open_answer_text" value="59">59</option>
+                            <option name="open_answer_text" value="60">60</option>
+                            <option name="open_answer_text" value="61">61</option>
+                            <option name="open_answer_text" value="62">62</option>
+                            <option name="open_answer_text" value="63">63</option>
+                            <option name="open_answer_text" value="64">64</option>
+                            <option name="open_answer_text" value="65">65</option>
+                            <option name="open_answer_text" value="66">66</option>
+                            <option name="open_answer_text" value="67">67</option>
+                            <option name="open_answer_text" value="68">68</option>
+                            <option name="open_answer_text" value="69">69</option>
+                            <option name="open_answer_text" value="70">70</option>
+                            <option name="open_answer_text" value="71">71</option>
+                            <option name="open_answer_text" value="72">72</option>
+                            <option name="open_answer_text" value="73">73</option>
+                            <option name="open_answer_text" value="74">74</option>
+                            <option name="open_answer_text" value="75">75</option>
+                            <option name="open_answer_text" value="76">76</option>
+                            <option name="open_answer_text" value="77">77</option>
+                            <option name="open_answer_text" value="78">78</option>
+                            <option name="open_answer_text" value="79">79</option>
+                            <option name="open_answer_text" value="80">80</option>
+                            <option name="open_answer_text" value="81">81</option>
+                            <option name="open_answer_text" value="82">82</option>
+                            <option name="open_answer_text" value="83">83</option>
+                            <option name="open_answer_text" value="84">84</option>
+                            <option name="open_answer_text" value="85">85</option>
+                            <option name="open_answer_text" value="86">86</option>
+                            <option name="open_answer_text" value="87">87</option>
+                            <option name="open_answer_text" value="88">88</option>
+                            <option name="open_answer_text" value="89">89</option>
+                            <option name="open_answer_text" value="90">90</option>
+                            <option name="open_answer_text" value="91">91</option>
+                            <option name="open_answer_text" value="92">92</option>
+                            <option name="open_answer_text" value="93">93</option>
+                            <option name="open_answer_text" value="94">94</option>
+                            <option name="open_answer_text" value="95">95</option>
+                            <option name="open_answer_text" value="96">96</option>
+                            <option name="open_answer_text" value="97">97</option>
+                            <option name="open_answer_text" value="98">98</option>
+                            <option name="open_answer_text" value="99">99</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slide 5: Country select — Q24 qid=1454 -->
+                <!-- Has BOTH slider-next-select (auto-advance on change) AND a manual
+                     <a class="country btn..."> because US is pre-selected and won't trigger change -->
+                <div class="question GENERIC_4REDIRECTS_PODCAST_SPIRITUAL ">
+                  <div class="questionnaire-content">
+                    <div class="form-group">
+                      <label class="questionnaire-content-label"><strong>Which country are you in?</strong></label>
+                      <div>
+                        <div>
+                          <select required id="country" type="select" class="form-control slider-next-select" data-question-type="country" data-question-id="1454" name="quiz_answers[GENERIC_4REDIRECTS_PODCAST_SPIRITUAL][1454][]">
+                            <option value="0">Select your country</option>
+                            <option value="1" selected>United States</option>
+                            <option value="15">Australia</option>
+                            <option value="41">Canada</option>
+                            <option value="56">Denmark</option>
+                            <option value="68">Finland</option>
+                            <option value="75">France</option>
+                            <option value="85">Germany</option>
+                            <option value="108">Ireland</option>
+                            <option value="117">Israel</option>
+                            <option value="122">Japan</option>
+                            <option value="154">Netherlands</option>
+                            <option value="166">New Zealand</option>
+                            <option value="175">Norway</option>
+                            <option value="209">Sweden</option>
+                            <option value="210">Switzerland</option>
+                            <option value="232">United Kingdom</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <a class="country btn btn-default btn-next btn-lg slider-next" name="quiz_answers[GENERIC_4REDIRECTS_PODCAST_SPIRITUAL][1454][]">Next</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slide 6: Checkboxes + manual Next — INSURANCE_QUIZ qid=1430 -->
+                <!-- income_checkbox type; additional_income shown by funnel.js on any checkbox check -->
+                <div class="question INSURANCE_QUIZ ">
+                  <div class="questionnaire-content">
+                    <div class="form-group">
+                      <label class="questionnaire-content-label"><strong>Please mark all that apply</strong></label>
+                      <div class="form-group" id="insurance_income">
+                        <label class="checkbox">
+                          <input type="checkbox" id="1430" data-question-type="income_checkbox" data-question-id="1430" class="answer" name="quiz_answers[INSURANCE_QUIZ][1430][]" value="4748">I'm a student
+                        </label>
+                        <label class="checkbox">
+                          <input type="checkbox" id="1430" data-question-type="income_checkbox" data-question-id="1430" class="answer" name="quiz_answers[INSURANCE_QUIZ][1430][]" value="4749">I'm a veteran
+                        </label>
+                        <label class="checkbox">
+                          <input type="checkbox" id="1430" data-question-type="income_checkbox" data-question-id="1430" class="answer" name="quiz_answers[INSURANCE_QUIZ][1430][]" value="4750">I'm disabled
+                        </label>
+                        <label class="checkbox">
+                          <input type="checkbox" id="1430" data-question-type="income_checkbox" data-question-id="1430" class="answer" name="quiz_answers[INSURANCE_QUIZ][1430][]" value="4751">I'm unemployed
+                        </label>
+                        <label class="checkbox">
+                          <input type="checkbox" id="1430" data-question-type="income_checkbox" data-question-id="1430" class="answer" name="quiz_answers[INSURANCE_QUIZ][1430][]" value="4752">I'm employed but my income is low
+                        </label>
+                        <div class="hidden" id="additional_income">
+                          <label>
+                            <strong>Annual household income:</strong>
+                            <div id="household_income">
+                              <span class="currency_input">$</span>
+                              <input type="text" class="form-control" name="annual_income" id="annual_income">
+                            </div>
+                          </label>
+                          <label>
+                            <strong>Number of people in household:</strong>
+                            <input type="number" min="1" class="form-control" name="household_size" id="household_size" value="">
+                          </label>
+                        </div>
+                        <a class="btn btn-default btn-next btn-lg slider-next" id="next_income">Next</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <!-- end #start-question-slider -->
+
+              <!-- Completion screen — outside slider, shown after last question -->
+              <div class="next hidden" id="questionnaire-complete">
+                <div class="questionnaire-content center">
+                  <h2>You've completed the questionnaire!</h2>
+                  <button
+                    type="submit"
+                    id="quiz-submit"
+                    class="btn btn-default btn-lg btn-block"
+                  >
+                    Next
+                  </button>
+                </div>
+              </div>
+            </form>
           </div>
+          <!--END SIDE LEFT-->
         </div>
       </div>
     </div>
+
+    <div id="quizzes_loaded" data-quizzes-loaded="GENERIC_4REDIRECTS_PODCAST_SPIRITUAL INSURANCE_QUIZ"></div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
