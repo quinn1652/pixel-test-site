@@ -161,6 +161,36 @@
       .hidden {
         display: none !important;
       }
+
+      /* Bootstrap 3 sets position:absolute; margin-left:-20px on inputs inside
+         .radio, which pulls them out of the Slick slide's overflow clip and causes
+         them to bleed into adjacent slides. Override to keep them in normal flow. */
+      label.radio input[type="radio"] {
+        position: static;
+        margin-left: 0;
+        margin-right: 6px;
+        vertical-align: middle;
+      }
+      /* Bootstrap also adds padding-left:20px to .radio label — zero it out since
+         the input is now inline with the label text. */
+      label.radio {
+        padding-left: 0;
+      }
+
+      /* Checkbox inputs same fix */
+      label.checkbox input[type="checkbox"] {
+        position: static;
+        margin-left: 0;
+        margin-right: 6px;
+        vertical-align: middle;
+      }
+      label.checkbox {
+        padding-left: 0;
+        font-weight: normal;
+        cursor: pointer;
+        display: block;
+        padding: 2px 0;
+      }
     </style>
   </head>
 
