@@ -77,30 +77,39 @@
     </script>
     <!-- End Meta Pixel Code -->
 
-    <!-- dataLayer init must precede GTM snippet -->
-    <script>window.dataLayer = window.dataLayer || [];</script>
-
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-MLVMM25Z');</script>
-    <!-- End Google Tag Manager -->
-
-    <!-- Page-load pixel events fired via dataLayer → GTM → fbq() -->
+    <!-- Google Tag Manager — ID from pixel-config.js -->
     <script>
       (function () {
-        dataLayer.push({ event: 'initiate_checkout' });
+        var gtmId = window.PIXEL_CONFIG && window.PIXEL_CONFIG.gtmId;
+        if (!gtmId) return;
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var f = document.getElementsByTagName('script')[0];
+        var j = document.createElement('script');
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + gtmId;
+        f.parentNode.insertBefore(j, f);
+      })();
+    </script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Page-load pixel events — direct fbq() calls, mirroring _tracking.tpl trigger_sign_up_pixel.
+         InitiateCheckout fires unconditionally. AddToWishlist fires if therapy=yes.
+         Search + Lead fire if therapy=yes AND financial != poor (mirrors original AND condition). -->
+    <script>
+      (function () {
+        fbq('track', 'InitiateCheckout', { source: window.location.hostname });
 
         var therapy = sessionStorage.getItem('therapy_before');
-        if (therapy === 'yes') {
-          dataLayer.push({ event: 'add_to_wishlist' });
-        }
-
         var fin = sessionStorage.getItem('financial_status');
-        if (fin && fin !== 'poor') {
-          dataLayer.push({ event: 'indicate_not_poor' });
+
+        if (therapy === 'yes') {
+          fbq('track', 'AddToWishlist', { source: window.location.hostname });
+
+          if (fin && fin !== 'poor') {
+            fbq('track', 'Search', { source: window.location.hostname });
+            fbq('track', 'Lead', { source: window.location.hostname });
+          }
         }
       })();
     </script>
@@ -160,8 +169,13 @@
 
   <body>
     <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MLVMM25Z"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <script>
+      (function () {
+        var gtmId = window.PIXEL_CONFIG && window.PIXEL_CONFIG.gtmId;
+        if (!gtmId) return;
+        document.write('<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=' + gtmId + '" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>');
+      })();
+    </script>
     <!-- End Google Tag Manager (noscript) -->
 
     <div id="test-env-banner">
@@ -357,9 +371,13 @@
           }
           $("#payment-errors").addClass("hidden");
 
-          dataLayer.push({ event: 'add_payment_info' });
-          dataLayer.push({ event: 'purchase' });
-          dataLayer.push({ event: 'complete_registration', referred_you: window.location.hostname });
+          // Direct fbq() calls — mirrors _tracking.tpl trigger_started_trial_pixel + trigger_sign_up_pixel
+          fbq('track', 'CompleteRegistration', { order_id: 'su-ms-test', currency: 'USD', value: '0.00', source: window.location.hostname, referred_you: window.location.hostname });
+          fbq('track', 'AddPaymentInfo', { value: 0, currency: 'USD', source: window.location.hostname });
+          fbq('track', 'Lead', { source: window.location.hostname });
+          fbq('track', 'ViewContent', { source: window.location.hostname });
+          fbq('track', 'InitiateCheckout', { source: window.location.hostname });
+          fbq('track', 'Purchase', { value: 0, currency: 'USD', source: window.location.hostname });
 
           $("#section-payment").addClass("hidden");
           $("#signup-confirmed").removeClass("hidden");

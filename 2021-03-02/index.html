@@ -111,15 +111,20 @@
     </script>
     <!-- End Meta Pixel Code -->
 
-    <!-- dataLayer init must precede GTM snippet -->
-    <script>window.dataLayer = window.dataLayer || [];</script>
-
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-MLVMM25Z');</script>
+    <!-- Google Tag Manager — ID from pixel-config.js -->
+    <script>
+      (function () {
+        var gtmId = window.PIXEL_CONFIG && window.PIXEL_CONFIG.gtmId;
+        if (!gtmId) return;
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var f = document.getElementsByTagName('script')[0];
+        var j = document.createElement('script');
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + gtmId;
+        f.parentNode.insertBefore(j, f);
+      })();
+    </script>
     <!-- End Google Tag Manager -->
 
     <style>
@@ -225,8 +230,13 @@
 
   <body id="start" class="">
     <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MLVMM25Z"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <script>
+      (function () {
+        var gtmId = window.PIXEL_CONFIG && window.PIXEL_CONFIG.gtmId;
+        if (!gtmId) return;
+        document.write('<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=' + gtmId + '" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>');
+      })();
+    </script>
     <!-- End Google Tag Manager (noscript) -->
 
     <div id="test-env-banner">

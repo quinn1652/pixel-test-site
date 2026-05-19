@@ -18,6 +18,9 @@ window.PIXEL_CONFIG = {
   // Your Facebook test pixel ID — replace before testing
   pixelId: "1308318914571848",
 
+  // Google Tag Manager container ID — shared across all versions
+  gtmId: "GTM-MLVMM25Z",
+
   // fbevents.js URL. Swap for an archived version to test specific
   // fbevents.js behavior. Default loads the current version from Facebook CDN.
   fbeventsUrl: "https://connect.facebook.net/en_US/fbevents.js",

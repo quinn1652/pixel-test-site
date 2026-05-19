@@ -70,9 +70,9 @@
     <h1>Pixel Test Site</h1>
 
     <div class="banner">
-      <strong>Research use only.</strong> Generic test forms instrumented with a
-      configurable Facebook pixel. Configure your pixel ID in
-      <code>pixel-config.js</code> before testing.
+      <strong>Research use only.</strong> Configure your pixel ID and GTM
+      Container ID in <code>pixel-config.js</code> before testing. Also make
+      sure GTM Container is set up with appropriate Tags and Triggers.
     </div>
 
     <ul class="versions">
@@ -89,6 +89,7 @@
         <span class="label"
           >Big square buttons · label IS the button · SubscribedButtonClick on
           every selection · show-more · state slide added · COVID checkbox ·
+          is_previous_therapy / is_finance → GTM → conditional pixel events ·
           includes signup/payment page</span
         >
       </li>
@@ -96,9 +97,11 @@
 
     <div class="config-note">
       <strong>Before testing:</strong> open <code>pixel-config.js</code> and set
-      <code>pixelId</code> to your own Facebook test pixel ID. While
-      <code>dryRun: true</code>, all <code>fbq()</code> calls are logged to the
-      browser console and nothing is transmitted. Set
+      <code>pixelId</code> to your own Facebook test pixel ID and
+      <code>gtmId</code> to your GTM container ID. GTM must be configured with
+      the appropriate triggers and tags before conditional pixel events will
+      fire. While <code>dryRun: true</code>, all <code>fbq()</code> calls are
+      logged to the browser console and nothing is transmitted. Set
       <code>dryRun: false</code> to send live beacons.
     </div>
   </body>
